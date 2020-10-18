@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include <unistd.h>
 int main()
 {
 	int i;
@@ -8,7 +9,7 @@ int main()
 	printf("\n\nGive space [x,y] to let me find random numbers\n");
 	do
 	{
-	max=r=x=y=dif=0;	
+	max=r=x=y=dif=0;
 	printf("\n\nx=");
 	scanf("%lf", &x);
 	printf("\ny=");
@@ -21,6 +22,7 @@ int main()
 		printf("\n%lf", r);
 	}
 	}while ((x!=0)&&(y!=0));
-	
+
+	sleep(1000);
 	return 0;
 }

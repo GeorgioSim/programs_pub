@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <time.h>
+#include <unistd.h>
 double myseq(double x,double y);
 int main()
 {
@@ -30,6 +31,7 @@ int main()
 	pi=4.*Ncircle/Nsquare;
 	printf("\npi=%lf", pi);
 
+	sleep(1000);  //easy solution
 	return 0;
 }
 
