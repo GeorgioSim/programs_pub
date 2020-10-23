@@ -1,5 +1,3 @@
-##AM:1110201800159
-
 #Gia na leitoyrgisei thelei etoima data morfhs
 #x,y,x_SE,y_SE (standard errors) apo excel arxeio
 
@@ -42,20 +40,6 @@ summary(mod3)
 attributes(mod3) #gia na dw ti exei san attributes
 mod3$coefficients  #slope kai intercept
 
-#try nonlinear
-# Take the assumed values and fit into the models:
-#y=a/x+b
-model1 <- nls(y ~ b1/x+b2,start = list(b1 = -100,b2 = 300))
-#y=ax^2+b
-model2 <- nls(y ~ b1*x^2+b2,start = list(b1 = -100,b2 = 300))
-#y=a*(x^2+b^2)^(-3/2))
-model3 <- nls(y ~ b1*4.1^2/((x-24.5)^2+4.1^2)^(3/2),start = list(b1 =10))
-#y=a*SQRT(x)
-model4<- nls(y ~ b1*x^(0.5)+0.0001,start = list(b1 = 1))
-
-
-
-
 # selida 563
 p <-ggplot()+
   geom_point(data=Rdata, aes(x,y), size = 2, color ="blue")+
@@ -75,18 +59,6 @@ ytext<- 0.99*(max(y)-min(y))+min(y)
 cat(sprintf("y=%s x+ %s\n",  mod$coefficients[[2]],  mod$coefficients[[1]]),"\n",file="test.txt")
 test2 <- readLines("test.txt")
 p<-p + annotate("text", x = xtext, y = ytext, label = test2)
-p
-
-
-#geom_line: Plot the chart with new data by fitting it to a prediction from 10000 data points.
-new.data <- data.frame(x = seq(min(x),max(x),len = 1000))
-xmodel<-new.data$x
-ymodel<-predict(model3,newdata = new.data)
-neo.data<- data.frame(xmodel,ymodel)
-
-p<-p+ geom_point(data=neo.data, aes(xmodel, ymodel),size = 0,col = "yellow") +
-  geom_line(data=neo.data,aes(xmodel, ymodel), col = "red")
-
 p
 
 
@@ -114,16 +86,6 @@ g<-g + annotate("text", x = xtext, y = ytext, label = test2)
 g
 
 
-#geom_line: Plot the chart with new data by fitting it to a prediction from 10000 data points.
-new.data <- data.frame(x = seq(min(x),max(x),len = 1000))
-xmodel<-new.data$x
-ymodel<-predict(model3,newdata = new.data)
-neo.data<- data.frame(xmodel,ymodel)
-
-g<-g+ geom_point(data=neo.data, aes(xmodel, ymodel),size = 0,col = "yellow") +
-  geom_line(data=neo.data,aes(xmodel, ymodel), col = "red")
-
-g
 
 
 # selida 563
@@ -148,22 +110,15 @@ h<-h + annotate("text", x = xtext, y = ytext, label = test2)
 h
 
 
-#geom_line: Plot the chart with new data by fitting it to a prediction from 10000 data points.
-new.data <- data.frame(x = seq(min(x2),max(x2),len = 1000))
-xmodel<-new.data$x
-ymodel<-predict(model4,newdata = new.data)
-neo.data<- data.frame(xmodel,ymodel)
-
-h<-h+ geom_point(data=neo.data, aes(xmodel, ymodel),size = 0,col = "yellow") +
-  geom_line(data=neo.data,aes(xmodel, ymodel), col = "red")
-
-h
-
-
-
 #timh toy x gia to maximum y.
 y_max<-max(ymodel)
 y_maxwhich<-which.max(ymodel)
 x_max<-xmodel[y_maxwhich]
 x_max
 
+rm(p)
+rm(g)
+rm(h)
+
+
+rm(list = ls())

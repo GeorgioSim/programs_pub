@@ -1,6 +1,3 @@
-##AM:1110201800159
-
-
 #Gia na leitoyrgisei thelei etoima data morfhs
 #x,y,x_SE,y_SE (standard errors) apo excel arxeio
 
@@ -58,37 +55,6 @@ model3 <- nls(y ~ b1*d2^2/((x-median(x))^2+d2^2)^(3/2),start = list(b1 =20))
 model4 <- nls(y ~ b1*d1^2/((x-median(x))^2+d1^2)^(3/2),start = list(b1 =20))
 #y=a*(costheta1+costheta2)
 model5<- nls(y ~  b1*((L/2+x-median(x))/sqrt((L/2+x-median(x))^2+d1^2)+(L/2-x+median(x))/sqrt((L/2-x+median(x))^2+d1^2)) , start = list(b1=10))
-#y=a*(costheta1+costheta2)
-# previous try : model6<- nls(y ~  b1*((x-median(x))/sqrt((x-median(x))^2+d2^2)+(L-x+median(x))/sqrt((L-x+median(x))^2+d2^2)) , start = list(b1=10))
-model6<- nls(y ~  b1*((L/2+x-median(x))/sqrt((L/2+x-median(x))^2+d2^2)+(L/2-x+median(x))/sqrt((L/2-x+median(x))^2+d2^2)) , start = list(b1=10))
-
-
-
-# plots 41mm
-p <-ggplot()+
-  geom_point(data=Rdata, aes(x2,y2), size = 2, color ="blue")+
-  xlab("x[cm]") +
-  ylab("B[mT]") +
-  ggtitle("d=41mm")+
-  geom_errorbar(data=Rdata,mapping=aes(x=x2,ymin = y2-SE_y2,ymax = y2+SE_y2)) +
-  geom_errorbarh(data=Rdata,mapping=aes(y=y2,xmin = x2-SE_x2,xmax = x2+SE_x2))
-p  
-
-
-#geom_line: Plot the chart with new data by fitting it to a prediction from 10000 data points.
-new.data <- data.frame(x = seq(min(x2),max(x2),len = 1000))
-xmodel<-new.data$x
-ymodel<-predict(model6,newdata = new.data)
-neo.data<- data.frame(xmodel,ymodel)
-
-p<-p+ geom_point(data=neo.data, aes(xmodel, ymodel),size = 0,col = "orange") +
-  geom_line(data=neo.data,aes(xmodel, ymodel), col = "orange")
-p
-
-#Function eq draw.
- p<-p+geom_function(data.frame(x = seq(min(x2),max(x2),1000)), mapping=aes(x),fun = eq, colour = "red")
-p
-
 
 
 
@@ -117,9 +83,46 @@ g<-g+geom_function(data.frame(x = seq(min(x),max(x),1000)), mapping=aes(x),fun =
 g
 
 
+# plots 41mm
+p <-ggplot()+
+  geom_point(data=Rdata, aes(x2,y2), size = 2, color ="blue")+
+  xlab("x[cm]") +
+  ylab("B[mT]") +
+  ggtitle("d=41mm")+
+  geom_errorbar(data=Rdata,mapping=aes(x=x2,ymin = y2-SE_y2,ymax = y2+SE_y2)) +
+  geom_errorbarh(data=Rdata,mapping=aes(y=y2,xmin = x2-SE_x2,xmax = x2+SE_x2))
+p  
+
+y<-y2
+x<-x2
+#y=a*(costheta1+costheta2)
+# previous try : model6<- nls(y ~  b1*((x-median(x))/sqrt((x-median(x))^2+d2^2)+(L-x+median(x))/sqrt((L-x+median(x))^2+d2^2)) , start = list(b1=10))
+model6<- nls(y ~  b1*((L/2+x-median(x))/sqrt((L/2+x-median(x))^2+d2^2)+(L/2-x+median(x))/sqrt((L/2-x+median(x))^2+d2^2)) , start = list(b1=10))
+
+#geom_line: Plot the chart with new data by fitting it to a prediction from 10000 data points.
+new.data <- data.frame(x = seq(min(x2),max(x2),len = 1000))
+xmodel<-new.data$x
+ymodel<-predict(model6,newdata = new.data)
+neo.data<- data.frame(xmodel,ymodel)
+
+p<-p+ geom_point(data=neo.data, aes(xmodel, ymodel),size = 0,col = "orange") +
+  geom_line(data=neo.data,aes(xmodel, ymodel), col = "orange")
+p
+
+#Function eq draw.
+p<-p+geom_function(data.frame(x = seq(min(x2),max(x2),1000)), mapping=aes(x),fun = eq, colour = "red")
+p
+
+
 #timh toy x gia to maximum y.
 y_max<-max(ymodel)
 y_maxwhich<-which.max(ymodel)
 x_max<-xmodel[y_maxwhich]
 x_max
 
+
+
+rm(p)
+
+
+rm(list = ls())
