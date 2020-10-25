@@ -1,3 +1,6 @@
+##AM:1110201800159
+##Askhsh D8 ergastiriou fysikis 4
+
 #Gia na leitoyrgisei thelei etoima data morfhs
 #x,y,x_SE,y_SE (standard errors) apo excel arxeio
 

@@ -1,4 +1,5 @@
 ##AM:1110201800159
+##Askhsh D1 ergastiriou fysikis 4
 
 #Gia na leitoyrgisei thelei etoima data morfhs
 #x,y,x_SE,y_SE (standard errors) apo excel arxeio
@@ -107,7 +108,7 @@ p <-ggplot()+
 p<-p+ geom_abline(intercept = mod$coefficients[[1]], slope = mod$coefficients[[2]])
 xtext<- 2*(max(dia_r)-min(dia_r))+min(dia_r)
 ytext<- 2*(max(B)-min(B))+min(B)
-cat(sprintf("y1=%s x+ %s\n",  mod$coefficients[[2]],  mod$coefficients[[1]]),"\n",file="test.txt")
+cat(sprintf("y1=%s x+ (%s)\n",  mod$coefficients[[2]],  mod$coefficients[[1]]),"\n",file="test.txt")
 test1 <- readLines("test.txt")
 p<-p + annotate("text", x = xtext, y = ytext, label = test1)
 
@@ -115,7 +116,7 @@ p<-p + annotate("text", x = xtext, y = ytext, label = test1)
 p<-p+ geom_abline(intercept = mod2$coefficients[[1]], slope = mod2$coefficients[[2]])
 xtext<- 1.7*(max(dia_r2)-min(dia_r2))+min(dia_r2)
 ytext<- 1.6*(max(B2)-min(B2))+min(B2)
-cat(sprintf("y2=%s x+ %s\n",  mod2$coefficients[[2]],  mod2$coefficients[[1]]),"\n",file="test2.txt")
+cat(sprintf("y2=%s x+ (%s)\n",  mod2$coefficients[[2]],  mod2$coefficients[[1]]),"\n",file="test2.txt")
 test2 <- readLines("test2.txt")
 p<-p + annotate("text", x = xtext, y = ytext, label = test2)
 
@@ -123,7 +124,7 @@ p<-p + annotate("text", x = xtext, y = ytext, label = test2)
 p<-p+ geom_abline(intercept = mod3$coefficients[[1]], slope = mod3$coefficients[[2]])
 xtext<- 1.1*(max(dia_r3)-min(dia_r3))+min(dia_r3)
 ytext<- 1.2*(max(B3)-min(B3))+min(B3)
-cat(sprintf("y3=%s x+ %s\n",  mod3$coefficients[[2]],  mod3$coefficients[[1]]),"\n",file="test3.txt")
+cat(sprintf("y3=%s x+ (%s)\n",  mod3$coefficients[[2]],  mod3$coefficients[[1]]),"\n",file="test3.txt")
 test3 <- readLines("test3.txt")
 p<-p + annotate("text", x = xtext, y = ytext, label = test3)
 
@@ -131,12 +132,14 @@ p<-p + annotate("text", x = xtext, y = ytext, label = test3)
 p<-p+ geom_abline(intercept = mod4$coefficients[[1]], slope = mod4$coefficients[[2]])
 xtext<- 0.7*(max(dia_r4)-min(dia_r4))+min(dia_r4)
 ytext<- 0.80*(max(B4)-min(B4))+min(B4)
-cat(sprintf("y4=%s x+ %s\n",  mod4$coefficients[[2]],  mod4$coefficients[[1]]),"\n",file="test4.txt")
+cat(sprintf("y4=%s x+ (%s)\n",  mod4$coefficients[[2]],  mod4$coefficients[[1]]),"\n",file="test4.txt")
 test4 <- readLines("test4.txt")
 p<-p + annotate("text", x = xtext, y = ytext, label = test4)
 p
 
 H<- data.frame(B1_Tesla= B,dB1_Tesla=dB,B2_Tesla= B2,dB2_Tesla=dB2,B3_Tesla= B3,dB3_Tesla=dB3,B4_Tesla= B4,dB4_Tesla=dB4)
+Hr<- data.frame(ena_dia_r1= dia_r ,d_ena_dia_r1=d_dia_r,ena_dia_r2= dia_r2 ,d_ena_dia_r2=d_dia_r2,ena_dia_r3= dia_r3 ,d_ena_dia_r3=d_dia_r3,ena_dia_r4= dia_r4 ,d_ena_dia_r4=d_dia_r4)
+
 #linear regression, tha xreiastei meta sto geom_abline
 Klisi<- data.frame(k1=mod$coefficients[[2]], d_k1= rstderror1,k2=mod2$coefficients[[2]], d_k2= rstderror2,k3=mod3$coefficients[[2]], d_k3= rstderror3,k4=mod4$coefficients[[2]], d_k4= rstderror4 )
 #klisi se monades me mm.
@@ -162,7 +165,12 @@ e_m<- data.frame(e_m_all=m_e_dia_mol, d_e_m_all= dd_m_e_dia_mol ,  e_m_final,dif
 
 e_m<-format(e_m, scientific = TRUE)
 
+sV<-c(sV1,sV2,sV3,sV4)
+u<-sqrt(2*(m_e_dia_mol)*sV)
+gamma<- 1/sqrt(1-(u/(3 * 10^8 ))^2)
+
 View(H)
+View(Hr)
 View(Klisi)
 View(e_m)
-
+View(u)
