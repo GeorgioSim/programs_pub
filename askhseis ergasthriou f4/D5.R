@@ -1,5 +1,5 @@
-##AM:1110201800159
-##Askhsh D5 ergastiriou fysikis 4
+##AM: 1110201800159
+##Askhsh D5 ergastirio f4
 
 #Gia na leitoyrgisei thelei etoima data morfhs
 #x,y,x_SE,y_SE (standard errors) apo excel arxeio
@@ -40,6 +40,7 @@ mod<-lm(y ~ x)
 summary(mod)
 attributes(mod) #gia na dw ti exei san attributes
 mod$coefficients  #slope kai intercept
+rstderror<-sqrt(deviance(mod)/df.residual(mod))
 
 mod2<-lm(y2 ~ x2)
 summary(mod2)
@@ -149,3 +150,9 @@ neo.data<- data.frame(xmodel,ymodel)
 k<-k+ geom_point(data=neo.data, aes(xmodel, ymodel),size = 0,col = "orange") +
   geom_line(data=neo.data,aes(xmodel, ymodel), col = "orange")
 k
+
+#timh toy x gia to maximum y.
+y_max<-max(ymodel)
+y_maxwhich<-which.max(ymodel)
+x_max<-xmodel[y_maxwhich]
+x_max
