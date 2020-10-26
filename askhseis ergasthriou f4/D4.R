@@ -24,18 +24,21 @@ SE_x<-Rdata$`d_f1[Hz]`
 SE_x2<-Rdata$`d_f2[Hz]`
 SE_y<-Rdata$`d_Vs1[V]`
 SE_y2<-Rdata$`d_Vs2[V]`
+h<-Rdata$`h[Js]`
+d_h<-Rdata$`d_h[Js]`
 
 #linear regression, tha xreiastei meta sto geom_abline
 mod<-lm(y ~ x)
 summary(mod)
 attributes(mod) #gia na dw ti exei san attributes
 mod$coefficients  #slope kai intercept
+rstderror1<-sqrt(deviance(mod)/df.residual(mod))
 
 mod2<-lm(y2 ~ x2)
 summary(mod2)
 attributes(mod2) #gia na dw ti exei san attributes
 mod2$coefficients  #slope kai intercept
-
+rstderror2<-sqrt(deviance(mod2)/df.residual(mod2))
 
 
 # selida 563
@@ -70,7 +73,7 @@ g <-ggplot()+
   ggtitle("d=8 mm")+
   geom_errorbar(data=Rdata,mapping=aes(x=x2,ymin = y2-SE_y2,ymax = y2+SE_y2), width=0.01) +
   geom_errorbarh(data=Rdata,mapping=aes(y=y2,xmin = x2-SE_x2,xmax = x2+SE_x2), height=0.1)
-  g 
+g 
 
 
 #geom_abline eytheia elaxistwn + text gia abline
@@ -84,8 +87,29 @@ g<-g + annotate("text", x = xtext, y = ytext, label = test2)
 g
 
 
+hallo<-ggplot()+
+  geom_point(data=Rdata, aes(x2,y2), size = 2, color ="red")+
+  geom_point(data=Rdata, aes(x,y), size = 2, color ="blue")+
+  xlab("f[Hz]") +
+  ylab("Vs[V]") +
+  ggtitle("same diagram")
+
+#sd=standard deviation
+hmean<-mean(c(h[1], h[2]))
+std <- function(x) sd(x)/sqrt(length(x))
+hstd<-std(c(h[1], h[2]))
+hdata<-data.frame(hmean[1],hstd[1],(hstd+c(d_h[1],d_h[2]))/hmean[1]*100)
+View(hdata)
+
+
 #timh toy x gia to maximum y.
 f1<--mod$coefficients[[1]]/mod$coefficients[[2]]
 f2<--mod2$coefficients[[1]]/mod2$coefficients[[2]]
 f1
 f2
+
+fmean<-mean(c(f1,f2))
+std <- function(x) sd(x)/sqrt(length(x))
+fstd<-std(c(f1,f2))
+fdata<-data.frame(fmean,fstd,fstd/fmean*100)
+View(fdata)
