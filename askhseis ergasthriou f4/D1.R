@@ -39,10 +39,10 @@ dI <- V1$`dI1[A]`
 dI2 <- V2$`dI1[A]`
 dI3 <- V3$`dI1[A]`
 dI4 <- V4$`dI1[A]`
-dia_r <- 1/V1$`r1[mm]`
-dia_r2 <- 1/V2$`r1[mm]`
-dia_r3 <- 1/V3$`r1[mm]`
-dia_r4 <- 1/V4$`r1[mm]`
+dia_r <- 1/(V1$`r1[mm]`*10^-3)
+dia_r2 <- 1/(V2$`r1[mm]`*10^-3)
+dia_r3 <- 1/(V3$`r1[mm]`*10^-3)
+dia_r4 <- 1/(V4$`r1[mm]`*10^-3)
 d_dia_r <- 1/(V1$`dr1[mm]`)^2 * dia_r
 d_dia_r2 <- 1/(V2$`dr1[mm]`)^2 * dia_r2
 d_dia_r3 <- 1/(V3$`dr1[mm]`)^2 * dia_r3
@@ -91,7 +91,7 @@ p <-ggplot()+
   geom_point(data=V2, aes(dia_r2,B2), size = 3, color ="red")+
   geom_point(data=V3, aes(dia_r3,B3), size = 3, color ="green")+
   geom_point(data=V4, aes(dia_r4,B4), size = 3, color ="purple")+
-  xlab("1/r[mm]") +
+  xlab("1/r[1/m]") +
   ylab("B[T]") +
   ggtitle("V1=302[V],V2=250[V],V3=200[V],V4=155[V]")+
   geom_errorbar(data=V1,mapping=aes(x=dia_r,ymin = B-dB,ymax = B+dB)) +
@@ -143,10 +143,10 @@ Hr<- data.frame(ena_dia_r1= dia_r ,d_ena_dia_r1=d_dia_r,ena_dia_r2= dia_r2 ,d_en
 #linear regression, tha xreiastei meta sto geom_abline
 Klisi<- data.frame(k1=mod$coefficients[[2]], d_k1= rstderror1,k2=mod2$coefficients[[2]], d_k2= rstderror2,k3=mod3$coefficients[[2]], d_k3= rstderror3,k4=mod4$coefficients[[2]], d_k4= rstderror4 )
 #klisi se monades me mm.
-e_dia_m1<- 2*(sV1/((Klisi$k1)^2 * 10^-6))
-e_dia_m2<- 2*(sV2/((Klisi$k2)^2 * 10^-6))
-e_dia_m3<- 2*(sV3/((Klisi$k3)^2 * 10^-6))
-e_dia_m4<- 2*(sV4/((Klisi$k4)^2 * 10^-6))
+e_dia_m1<- 2*(sV1/((Klisi$k1)^2))
+e_dia_m2<- 2*(sV2/((Klisi$k2)^2))
+e_dia_m3<- 2*(sV3/((Klisi$k3)^2))
+e_dia_m4<- 2*(sV4/((Klisi$k4)^2))
 d_e_dia_m1<- e_dia_m1* sqrt((mean(V1$`dV1[V]`)/sV1)^2+4*(rstderror1/mod$coefficients[[2]])^2)
 d_e_dia_m2<- e_dia_m2* sqrt((mean(V2$`dV1[V]`)/sV2)^2+4*(rstderror2/mod2$coefficients[[2]])^2)
 d_e_dia_m3<- e_dia_m3* sqrt((mean(V3$`dV1[V]`)/sV3)^2+4*(rstderror3/mod3$coefficients[[2]])^2)
