@@ -1,0 +1,2 @@
+To allazw apo ta options tou csv/xlsx 2 fores (switch)
+H alliws: =VALUE(SUBSTITUTE(A1;".";",")) se neo keli
