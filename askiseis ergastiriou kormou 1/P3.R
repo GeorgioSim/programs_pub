@@ -24,17 +24,17 @@ Tasks<- "Tasks"
 Month<-c("Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec")
 
 s<-SPD[which(Rdata$MO==1)]
-Apnoia<-length(which(s==0))
+Apnoia<-length(which(s==0))/length(which(SPD==0))*100
 Mesi_timi<-mean(s)
 Diaspora<-var(s)
 Diamesos<-median(s)
-xdata <- data.frame(Tasks = c("Apnoia","Average","Variance","Median"), 
+xdata <- data.frame(Tasks = c("Apnoia%","Average[m/s]","Variance[m^2/s^2]","Median[m/s]"), 
                     Jan = c(Apnoia,Mesi_timi,Diaspora,Diamesos),
                     stringsAsFactors = FALSE)
 
 for(i in 2:12){
   s<-SPD[which(Rdata$MO==i)]
-  Apnoia<-length(which(s==0))
+  Apnoia<-length(which(s==0))/length(which(SPD==0))*100
   Mesi_timi<-mean(s)
   Diaspora<-var(s)
   Diamesos<-median(s)
@@ -45,5 +45,3 @@ for(i in 2:12){
 
 setnames(xdata, old = colnames(xdata), new = c(Tasks,Month))
 View(xdata)
-
-rm(xdata)
