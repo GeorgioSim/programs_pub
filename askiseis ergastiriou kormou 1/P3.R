@@ -45,3 +45,16 @@ for(i in 2:12){
 
 setnames(xdata, old = colnames(xdata), new = c(Tasks,Month))
 View(xdata)
+
+
+#most common number (mode)
+# Create the function.
+getmode <- function(v) {
+  uniqv <- unique(v)
+  uniqv[which.max(tabulate(match(v, uniqv)))]
+}
+# Create the vector with numbers.
+v <- Rdata$DIR
+# Calculate the mode using the user function.
+result <- getmode(v)
+print(result)
