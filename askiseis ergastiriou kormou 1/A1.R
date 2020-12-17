@@ -1,5 +1,3 @@
-#Gia na leitoyrgisei thelei etoima data morfhs
-#x,y,x_SE,y_SE (standard errors) apo excel arxeio
 
 #Askisi 1
 
