@@ -1,4 +1,5 @@
-
+#AM:1110201800159
+#Simopoulos Georgios
 #Askisi 1
 
 library(readxl)
@@ -51,13 +52,64 @@ integ<-integrate(func, min(xmodel),max(xmodel))
 f<-integ[["value"]]/100
 f
 
+#Gia to megisto
+
+lmax<-xmodel[which.max(ymodel)]
+Teff<-2.8978*10^-3/(lmax*10^-9)
+Teff
 
 
 
 
-rm(p)
 
 
-rm(list = ls())
 
 
+
+
+
+
+
+
+
+
+
+#theoretical T=5780K (F sto SI)
+Ttheory<-5780
+c1<-2*3.14159*6.626*10^-34 *9*10^16*10^45
+c2<-6.626*10^-34 *3*10^8/(1.380649 * 10^-23*Ttheory*10^-9)
+c1a<-c1*(6.95508*10^8/(1.496*10^11))^2
+c1a
+c2
+y<-c1a/x^5/(exp(c2/x)-1)
+y<-y*10^-7
+
+
+g <-ggplot()+
+  geom_point(data=Rdata, aes(x,y), size = 2, color ="blue")+
+  xlab("ë[nm]") +
+  ylab("F[W/m^2]") +
+  ggtitle("F=F(ë)")
+g 
+
+
+#ta metaferw sto excel gia na pane logger pro
+write_xlsx(data.frame(x,y),"new2.xlsx")
+
+
+
+
+
+
+
+
+
+
+
+
+
+#AKSHSH 2
+swstes<- 0.2157/9*1000
+swstes
+dswstes<- swstes/0.2157*0.0007
+dswstes
