@@ -255,7 +255,66 @@ View(dat2)
 
 
 #H2
+f<-1000
+t_i<-1/f
+AC_p<-1
+eq1 = function(x){
+  y<- AC_p * sin(2*pi*x/t_i)
+  y
+}
+#separately
+n<-7
+t_imax<-n*t_i
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vp[V]") +
+  ggtitle("1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)
 
 
+#separately
 
+eq2 = function(x){
+  y<- sin(2*pi*x/t_i)
+  z<-ifelse(y>0, 12,-12 )
+  z
+}
 
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vout[V]") +
+  ggtitle("1V (peak) AC, 7 periods")+
+geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("V[V]") +
+  ggtitle("1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/700)), mapping=aes(x),fun = eq2, colour =2)+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =3)
+
+#anastrofi polosi
+eq2 = function(x){
+  y<- sin(2*pi*x/t_i)
+  z<-ifelse(y>0, -12,12 )
+  z
+}
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vout[V]") +
+  ggtitle("1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("V[V]") +
+  ggtitle("1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/700)), mapping=aes(x),fun = eq2, colour =2)+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =3)
