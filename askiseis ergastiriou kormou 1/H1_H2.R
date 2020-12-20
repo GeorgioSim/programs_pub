@@ -396,13 +396,13 @@ Vinmax<--Vout_trof/Au
 Vout<-Au*Vin
 
 eq2 = function(x){
-  y<- -Vin*sin(2*pi*x/t_i)
+  y<- Vin*sin(2*pi*x/t_i)
   if(abs(Vin)>abs(Vinmax)){
     z<-ifelse(y>0, Vout_trof,-Vout_trof )
     z
   }
   else{
-    z<--Au*y
+    z<-Au*y
     z
   }
 }
@@ -429,3 +429,119 @@ ggplot()+
   geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)+
   geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
 
+#palmografos masterpieces
+
+#me anastrofi x=Vin
+R1<-1000
+R2<-10000
+Au<- -R2/R1
+Vout_trof<-12
+Vinmax<--Vout_trof/Au
+Vinf<-15
+eq3= function(x){
+  if(abs(x)>abs(Vinmax)){
+    z<-ifelse(x>0, -Vout_trof,Vout_trof )
+    z
+  }
+  else{
+    z<-Au*x
+    z
+  }
+}
+
+eq3_test<-Vectorize(eq3)
+
+dev.new()
+ggplot()+
+  xlab("Vin[V]") +
+  ylab("Vout[V]") +
+  ggtitle(" Udk = Vs/(-R2/R1) = 1.2 [V]")+
+  geom_function(data.frame(x = seq(-Vinf, Vinf, Vinf/1000)), mapping=aes(x),fun = eq3_test, colour =2)
+
+#xwris anastrofi x=Vin
+R1<-1000
+R2<-10000
+Au<- 1+R2/R1
+Vout_trof<-12
+Vinmax<-Vout_trof/Au
+Vinf<-15
+eq4= function(x){
+  if(abs(x)>abs(Vinmax)){
+    z<-ifelse(x>0, Vout_trof,-Vout_trof )
+    z
+  }
+  else{
+    z<-Au*x
+    z
+  }
+}
+
+eq4_test<-Vectorize(eq4)
+
+dev.new()
+ggplot()+
+  xlab("Vin[V]") +
+  ylab("Vout[V]") +
+  ggtitle(" Udk = Vs/(1+R2/R1) = 1.090909 [V]")+
+  geom_function(data.frame(x = seq(-Vinf, Vinf, Vinf/1000)), mapping=aes(x),fun = eq4_test, colour =3)
+
+
+
+#finale, akolouthitis tasews
+
+Vin<-1
+f<-1000
+t_i<-1/f
+n<-7
+t_imax<-n*t_i
+
+eq1 = function(x){
+  y<- Vin * sin(2*pi*x/t_i)
+  y
+}
+Vout_trof<-12
+Vout<-Vin
+
+eq2 = function(x){
+  y<- Vout*sin(2*pi*x/t_i)
+  y
+}
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vin[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vout[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
+
+#palmografos finale
+Au<- 1
+Vout_trof<-12
+Vinmax<-Vout_trof/Au
+Vinf<-15
+eq4= function(x){
+  if(abs(x)>abs(Vinmax)){
+    z<-ifelse(x>0, Vout_trof,-Vout_trof )
+    z
+  }
+  else{
+    z<-Au*x
+    z
+  }
+}
+
+eq4_test<-Vectorize(eq4)
+
+dev.new()
+ggplot()+
+  xlab("Vin[V]") +
+  ylab("Vout[V]") +
+  ggtitle(" Udk = Vs/(1+0) = 12 [V]")+
+  geom_function(data.frame(x = seq(-Vinf, Vinf, Vinf/1000)), mapping=aes(x),fun = eq4_test, colour =3)
