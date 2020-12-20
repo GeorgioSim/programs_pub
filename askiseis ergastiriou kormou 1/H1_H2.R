@@ -254,7 +254,7 @@ View(dat2)
 
 
 
-#H2
+#H2, askisi 1
 f<-1000
 t_i<-1/f
 AC_p<-1
@@ -269,16 +269,16 @@ t_imax<-n*t_i
 dev.new()
 ggplot()+
   xlab("t[s]") +
-  ylab("Vp[V]") +
-  ggtitle("1V (peak) AC, 7 periods")+
+  ylab("Vin[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
   geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)
 
 
 #separately
-
+Vout_trof<-12
 eq2 = function(x){
   y<- sin(2*pi*x/t_i)
-  z<-ifelse(y>0, 12,-12 )
+  z<-ifelse(y>0, Vout_trof,-Vout_trof )
   z
 }
 
@@ -286,21 +286,21 @@ dev.new()
 ggplot()+
   xlab("t[s]") +
   ylab("Vout[V]") +
-  ggtitle("1V (peak) AC, 7 periods")+
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
 geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
 
 dev.new()
 ggplot()+
   xlab("t[s]") +
   ylab("V[V]") +
-  ggtitle("1V (peak) AC, 7 periods")+
-  geom_function(data.frame(x = seq(0, t_imax, t_imax/700)), mapping=aes(x),fun = eq2, colour =2)+
-  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =3)
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/700)), mapping=aes(x),fun = eq2, colour =3)+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)
 
 #anastrofi polosi
 eq2 = function(x){
   y<- sin(2*pi*x/t_i)
-  z<-ifelse(y>0, -12,12 )
+  z<-ifelse(y>0, -Vout_trof,Vout_trof )
   z
 }
 
@@ -308,13 +308,124 @@ dev.new()
 ggplot()+
   xlab("t[s]") +
   ylab("Vout[V]") +
-  ggtitle("1V (peak) AC, 7 periods")+
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
   geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
 
 dev.new()
 ggplot()+
   xlab("t[s]") +
   ylab("V[V]") +
-  ggtitle("1V (peak) AC, 7 periods")+
-  geom_function(data.frame(x = seq(0, t_imax, t_imax/700)), mapping=aes(x),fun = eq2, colour =2)+
-  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =3)
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/700)), mapping=aes(x),fun = eq2, colour=3)+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)
+
+
+
+
+
+
+#H2, askisi 2
+R1<-1000
+R2<-10000
+Vin<-1
+f<-1000
+t_i<-1/f
+n<-7
+t_imax<-n*t_i
+
+eq1 = function(x){
+  y<- Vin * sin(2*pi*x/t_i)
+  y
+}
+Au<- -R2/R1
+Vout_trof<-12
+Vinmax<--Vout_trof/Au
+Vout<-Au*Vin
+
+eq2 = function(x){
+  y<- -Vin*sin(2*pi*x/t_i)
+  if(abs(Vin)>abs(Vinmax)){
+    z<-ifelse(y>0, Vout_trof,-Vout_trof )
+    z
+  }
+  else{
+    z<-Au*y
+    z
+  }
+}
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vin[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vout[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("V[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
+
+
+#xwris anastrofi
+R1<-1000
+R2<-10000
+Vin<-1
+f<-1000
+t_i<-1/f
+n<-7
+t_imax<-n*t_i
+
+eq1 = function(x){
+  y<- Vin * sin(2*pi*x/t_i)
+  y
+}
+Au<- -R2/R1
+Vout_trof<-12
+Vinmax<--Vout_trof/Au
+Vout<-Au*Vin
+
+eq2 = function(x){
+  y<- -Vin*sin(2*pi*x/t_i)
+  if(abs(Vin)>abs(Vinmax)){
+    z<-ifelse(y>0, Vout_trof,-Vout_trof )
+    z
+  }
+  else{
+    z<--Au*y
+    z
+  }
+}
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vin[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("Vout[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
+
+dev.new()
+ggplot()+
+  xlab("t[s]") +
+  ylab("V[V]") +
+  ggtitle("Vin=1V (peak) AC, 7 periods")+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq1, colour =2)+
+  geom_function(data.frame(x = seq(0, t_imax, t_imax/1000)), mapping=aes(x),fun = eq2, colour =3)
+
