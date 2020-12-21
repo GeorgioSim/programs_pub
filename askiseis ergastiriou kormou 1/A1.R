@@ -17,7 +17,9 @@ Rdata<-read_excel("new.xlsx")
 View(Rdata)
 
 x<-Rdata$lambda
+x2<-Rdata$lambda
 y<-Rdata$F
+y2<-Rdata$F
 
 #try nonlinear
 # Take the assumed values and fit into the models:
@@ -72,11 +74,22 @@ y<-y*10^-7
 
 
 g <-ggplot()+
-  geom_point(data=Rdata, aes(x,y), size = 2, color ="blue")+
+  geom_point(data=Rdata, aes(x,y), size = 1, color ="blue")+
   xlab("ë[nm]") +
-  ylab("F[W/m^2]") +
-  ggtitle("F=F(ë)")
+  ylab("F[W*10^-3/m^2/A]") +
+  ggtitle("F=F(ë)")+
+  geom_path(data=Rdata, aes(x,y), size = 1, color ="blue")+
+geom_line(data=neo.data,aes(xmodel, ymodel), col = "red")+
+  geom_point(data=Rdata, aes(x2,y2), size = 1, color ="green")+
+geom_line(data=Rdata, aes(x2,y2), size = 1, color ="green")
 g 
+
+
+
+
+
+
+
 
 
 #ta metaferw sto excel gia na pane logger pro
