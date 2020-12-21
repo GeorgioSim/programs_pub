@@ -60,20 +60,6 @@ Teff
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 #theoretical T=5780K (F sto SI)
 Ttheory<-5780
 c1<-2*3.14159*6.626*10^-34 *9*10^16*10^45
@@ -95,17 +81,6 @@ g
 
 #ta metaferw sto excel gia na pane logger pro
 write_xlsx(data.frame(x,y),"new2.xlsx")
-
-
-
-
-
-
-
-
-
-
-
 
 
 #AKSHSH 2
