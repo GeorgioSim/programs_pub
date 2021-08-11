@@ -34,7 +34,7 @@ x_b_unique<-unique(Rdata[c("x")]/Rdata[c("b")])$x
 
 
 # create data
-xb=101
+xb=12
 x_b_unique[xb]
 aval <- list()
 for(n in 1:(length(n_unique))){
