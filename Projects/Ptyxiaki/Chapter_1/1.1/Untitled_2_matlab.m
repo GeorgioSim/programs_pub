@@ -23,6 +23,9 @@ t0=20;
 spread=8;
 % Start loop
 M=moviein(nsteps);
+% Create and open the video object
+vidObj = VideoWriter('Plot Hy.avi');
+open(vidObj);
 for t=1:nsteps
 % E field loop
 for k=2:ke-1
@@ -40,4 +43,5 @@ plot(ex);axis([1 ke -2 2]);
 M(:,t) = getframe ;
 % input('')
 end
-movie(M,1);
+writeVideo(vidObj,M);
+close(vidObj);
