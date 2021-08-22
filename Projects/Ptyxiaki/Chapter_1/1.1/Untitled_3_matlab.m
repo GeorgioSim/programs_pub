@@ -21,8 +21,6 @@ hy=zeros(1,ke);
 % Gaussian pulse
 t0=20;
 spread=8;
-% Start loop
-M=moviein(nsteps);
 vidObj = VideoWriter('Change boundary condition.avi');
 open(vidObj);
 for t=1:nsteps

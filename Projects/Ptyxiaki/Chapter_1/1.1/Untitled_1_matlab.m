@@ -21,8 +21,6 @@ hy=zeros(1,ke);
 % Gaussian pulse
 t0=20;
 spread=8;
-% Start loop
-M=moviein(nsteps);
 % Create and open the video object
 vidObj = VideoWriter('2_Sources.avi');
 open(vidObj);
