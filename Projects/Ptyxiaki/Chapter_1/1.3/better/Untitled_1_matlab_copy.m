@@ -6,7 +6,7 @@ ke=50;
 % Position of the source
 ks=ke/2;
 % Number of time steps
-nsteps=100;
+nsteps=200;
 % Cell size and time stepping
 c0=3.e8;
 dx=0.01;

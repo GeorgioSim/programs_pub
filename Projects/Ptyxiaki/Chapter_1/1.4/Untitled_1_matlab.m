@@ -6,7 +6,7 @@ ke=50;
 % Position of the source
 ks=5;
 % Number of time steps
-nsteps=500;
+nsteps=300;
 % Cell size and time stepping
 c0=3.e8;
 dx=0.01;
@@ -38,6 +38,10 @@ end
 for k=kstart:ke
    cb(k)=cc/epsilon 
 end
+
+%Calculating R(reflection) and T(trasmission) coefficients
+R=(1-sqrt(epsilon))/(1+sqrt(epsilon));
+T=2/(1+sqrt(epsilon));
 % Main part of the program
 for t=1:nsteps
 % E field loop
@@ -61,7 +65,15 @@ lex_high_m1=ex(ke-1);
 for k=1:ke-1
 hy(k)=hy(k)+cb(k)*(ex(k)-ex(k+1));
 end
-plot(ex);axis([1 ke -2 2]);
+plot(ex);
+annotation('textbox',...
+    [0.7 0.6 0.2 0.3],...
+    'String',{['spread = ' num2str(spread)]},...
+    'FontSize',10,...
+    'FontName','Arial',...
+    'LineStyle','--',...
+    'FitBoxToText','on');
+axis([1 ke -2 2]);
 M(:,t) = getframe ;
 % input('')
 end
