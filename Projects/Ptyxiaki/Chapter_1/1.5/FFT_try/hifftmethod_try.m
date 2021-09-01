@@ -1,32 +1,54 @@
-%function [L,fmax]=hifftmethod_try(t0,spread,)
+function fdiff=hifftmethod_try(t0,spread,freq_in)
 
-clear all
 % Gaussian pulse
-t0=20;
-spread=8;
-%machine time Ts = 0.00001 minimum
-Ts = 0.00001;
-fs = 1/Ts;   % Sampling frequency
-t = 1:Ts:50;  % Time vector 
-L = length(t);      % Signal length
-
+%t0=20;
+%spread=8;
 %e3etazw kai prosarmozw thn syxnotita analoga kai me to Ts
-freq_in=40000;
+%freq_in_max=4e4
+%freq_in=400;
+%machine time Ts = 0.00001 minimum
+    Ts = 0.00001;
+    T=50;
+    check=Ts*freq_in;
+    fs = 1/Ts;   % Sampling frequency
+    t = 1:Ts:T;  % Time vector 
+    L = length(t);      % Signal length
+N=freq_in*max(t);
+while (N>ceil(N)+1 | N<ceil(N)-1) | N==ceil(N)
+while check<0.05
+    T=T*1.02;
+    Ts=Ts*1.02;
+    clear check;
+    check=Ts*freq_in;
+    clear fs;
+    clear t;
+    clear L;
+    clear N;
+    fs = 1/Ts;   % Sampling frequency
+    t = 1:Ts:T;  % Time vector 
+    L = length(t);      % Signal length
+
+
+    % Kykloys syxnothtas
+    N=freq_in*max(t);
+end
+end
+N
 %pulse=sin(2*pi*freq_in*t);
 %pulse=exp(-.5*((t-t0)/spread).^2);
 pulse=exp(-.5*((t-t0)/spread).^2).*sin(2*pi*freq_in*t);
 x=pulse;
+figure;
 plot(t,x);
 figure;
 % fft transform
 y = fft(x);  
 f = (0:length(y)-1)*fs/length(y);
-plot(f,abs(y));
+%plot(f,abs(y));
 % zero-centered, circular shift on the transform
 n = length(x);                         
 fshift = (-n/2:n/2-1)*(fs/n);
-yshift = fftshift(y);
-figure; 
+yshift = fftshift(y); 
 plot(fshift,abs(yshift))
 xlabel('Frequency (Hz)')
 ylabel('Magnitude');
@@ -69,24 +91,19 @@ if yf>=length(yshift)
 else
    fmax2= abs(fshift(max(find(abs(yshift)>0.1*abs(yshift(yf))))));
    fmax2
-   axis([-abs(fshift(yf+10)) abs(fshift(yf+10)) -ceil(abs(max(yshift))) ceil(abs(max(yshift)))]);
+   axis([-abs(fshift(yf+1)) abs(fshift(yf+1)) -ceil(abs(max(yshift))) ceil(abs(max(yshift)))]);
 end
     fdiff=(abs(fmax2-freq_in)/freq_in+1);
     fdiff
     fmax=freq_in*fdiff; 
-%or better:
-
-
-
-
-    
-
 
 % Cell size and time stepping
-c0=3.e8;
-lambdamin=c0/fmax;
-dx=lambdamin/10;
-dt=dx/(2.*c0);
+%c0=3.e8;
+%lambdamin=c0/fmax;
+%dx=lambdamin/10;
+%dt=dx/(2.*c0);
 % Constants
-cc=c0*dt/dx;
-dt
+%cc=c0*dt/dx;
+%dt
+
+end
