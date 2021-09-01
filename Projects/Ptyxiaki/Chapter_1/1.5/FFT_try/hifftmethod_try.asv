@@ -5,13 +5,13 @@ clear all
 t0=20;
 spread=8;
 %machine time Ts = 0.00001 minimum
-Ts = 0.00001;
+Ts = 0.01;
 fs = 1/Ts;   % Sampling frequency
 t = 1:Ts:50;  % Time vector 
 L = length(t);      % Signal length
 
 %e3etazw kai prosarmozw thn syxnotita analoga kai me to Ts
-freq_in=40000;
+freq_in=400;
 %pulse=sin(2*pi*freq_in*t);
 %pulse=exp(-.5*((t-t0)/spread).^2);
 pulse=exp(-.5*((t-t0)/spread).^2).*sin(2*pi*freq_in*t);
@@ -64,12 +64,8 @@ fdiff
 
 if yf>=length(yshift)
     fmax2=fmax;
-    fmax2
-    axis([-abs(fshift(yf)) abs(fshift(yf)) -ceil(abs(max(yshift))) ceil(abs(max(yshift)))]);
 else
-   fmax2= abs(fshift(max(find(abs(yshift)>0.1*abs(yshift(yf))))));
-   fmax2
-   axis([-abs(fshift(yf+10)) abs(fshift(yf+10)) -ceil(abs(max(yshift))) ceil(abs(max(yshift)))]);
+   fmax2= abs(fshift(max(find(abs(yshift)>0.1*abs(yshift(yf))))))
 end
     fdiff=(abs(fmax2-freq_in)/freq_in+1);
     fdiff
@@ -78,7 +74,7 @@ end
 
 
 
-
+axis([-abs(fshift(yf+10)) abs(fshift(yf+10)) -ceil(abs(max(yshift))) ceil(abs(max(yshift)))]);
     
 
 
