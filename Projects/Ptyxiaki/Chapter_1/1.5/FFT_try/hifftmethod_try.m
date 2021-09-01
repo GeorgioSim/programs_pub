@@ -1,15 +1,15 @@
 clear all
 % Gaussian pulse
 t0=20;
-spread=8;
+spread=80;
 %machine time Ts = 0.00001 minimum
-Ts = 0.01;
+Ts = 0.1;
 fs = 1/Ts;   % Sampling frequency
 t = 1:Ts:50;  % Time vector 
 L = length(t);      % Signal length
 
-%e3etazw kai prosarmozw thn syxnotita se mia bati gia to program
-freq_in=0.1;
+%e3etazw kai prosarmozw thn syxnotita analoga kai me to Ts
+freq_in=0.4;
 %pulse=sin(2*pi*freq_in*t);
 %pulse=exp(-.5*((t-t0)/spread).^2);
 pulse=exp(-.5*((t-t0)/spread).^2).*sin(2*pi*freq_in*t);
@@ -29,7 +29,7 @@ plot(fshift,abs(yshift))
 xlabel('Frequency (Hz)')
 ylabel('Magnitude');
 
-% Simgeorge algorithm for gaussian/sinusoidal pulses. Almost Completed.
+% algorithm for gaussian/sinusoidal pulses. Almost Completed.
 yshift_diff(length(yshift))=0;
 fshift_diff(length(fshift))=0;
 %for the diff
@@ -44,16 +44,27 @@ for j=1:length(yshift)-1
 end
     %yf:index of highest chance in curve
     yf=find(yshift_diff_perc==max(yshift_diff_perc));
+fmax=abs(fshift(yf));
+if fmax<freq_in
+    fmax=abs(freq_in-fmax)+freq_in;
+end
 
+fmax
+yf=max(find(abs(fshift)<fmax));
+fdiff=(abs(fmax-freq_in)/freq_in+1);
+fdiff
     
-%extender: indexes with yshift lower than 0.5% of ysfhift(yf). Needs fixing
-%extender=find(abs(yshift)>0.001*abs(yshift(yf)));
+%extender: indexes with yshift lower than 0.5% of yfshift(yf). Needs fixing
+%extender=find(abs(yshift)>0.5*abs(yshift(yf)));
 %yf2=max(extender);
 %fmax2=abs(fshift(yf2));
 %      fmax2
-%fdiff=(abs(fmax2-freq_in)/freq_in+1);
-%fdiff
-%fmax=freq_in*fdiff;
+
+%or better:
+fmax2= abs(fshift(max(find(abs(yshift)>0.1*abs(yshift(yf))))))
+fdiff=(abs(fmax2-freq_in)/freq_in+1);
+fdiff
+fmax=freq_in*fdiff;
 
 
 axis([-abs(fshift(yf+10)) abs(fshift(yf+10)) -ceil(abs(max(yshift))) ceil(abs(max(yshift)))]);
@@ -62,17 +73,7 @@ axis([-abs(fshift(yf+10)) abs(fshift(yf+10)) -ceil(abs(max(yshift))) ceil(abs(ma
 
 % Cell size and time stepping
 c0=3.e8;
-fmax=abs(fshift(yf));
-if fmax<freq_in
-    fmax=abs(freq_in-fmax)+freq_in;
-end
-
-fmax
-
-% fdiff is such that fmax=freq_in*fdiff
-fdiff=(abs(fmax-freq_in)/freq_in+1);
-fdiff
-lambdamin=c0/fmax;
+lambdamin=c0/fmax/L;
 dx=lambdamin/10;
 dt=dx/(2.*c0);
 % Constants
