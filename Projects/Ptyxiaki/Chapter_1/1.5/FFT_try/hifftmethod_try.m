@@ -1,5 +1,4 @@
 function fdiff=hifftmethod_try(t0,spread,freq_in)
-
 % Gaussian pulse
 %t0=20;
 %spread=8;
@@ -40,6 +39,7 @@ pulse=exp(-.5*((t-t0)/spread).^2).*sin(2*pi*freq_in*t);
 x=pulse;
 figure;
 plot(t,x);
+axis([-abs(max(t)) abs(max(t)) -ceil(abs(max(x))) ceil(abs(max(x)))]);
 figure;
 % fft transform
 y = fft(x);  
