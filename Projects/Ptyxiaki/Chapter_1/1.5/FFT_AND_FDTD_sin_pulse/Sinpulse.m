@@ -24,7 +24,7 @@ freq_in=2*pi*N/T;
 freq_in
 % Cell size and time stepping
 %after fftshift: paratirw oti to >1.5 einai kalo
-fmax=hifftmethod_try(t0,spread,N,nsteps);
+fmax=hifftmethod(t0,spread,N,nsteps);
 % fmax=freq_in*fdiff;
 fmax
 % Cell size and time stepping
@@ -74,7 +74,7 @@ end
 for n=1:nsteps
 % Source
 %pulser=sin(2*pi*freq_in*dt*n);
-pulser=exp(-.5*((n-t0)/spread).^2)*sin(2*pi*freq_in*n*dt);
+pulser=exp(-.5*((n-t0)/spread).^2)*sin(2*pi*freq_in*n);
 ex(ks)=ex(ks)+pulser;
 % E field loop
 for k=2:ke-1

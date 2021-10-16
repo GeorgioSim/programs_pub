@@ -1,4 +1,4 @@
-function fmax=hifftmethod_try(t0,spread,N,nsteps)
+function fmax=hifftmethod(t0,spread,N,nsteps)
 
 % WHEN IN USE/TEST, UNCOMMENT THE FOLLOWING
 % freq_in=0.2.*0.15;
