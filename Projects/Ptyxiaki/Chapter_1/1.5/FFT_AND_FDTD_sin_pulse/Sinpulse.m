@@ -54,7 +54,7 @@ lhy_low_m2=0.;
 lhy_high_m1=0.;
 lhy_high_m2=0.;
 % Create and open the video object
-vidObj = VideoWriter('SIN_pulse_with_dt_epsilon_2.avi');
+vidObj = VideoWriter('SIN_pulse_epsilon_2.avi');
 open(vidObj);
 % cb(k) according to dielectric
 for k=1:ke
@@ -82,7 +82,7 @@ ex(k)=ex(k)+cb(k)*(hy(k-1)-hy(k));
 end
 % H field loop
 for k=1:ke-1
-hy(k)=hy(k)+cb(k)*(ex(k)-ex(k+1));
+hy(k)=hy(k)+cc*(ex(k)-ex(k+1));
 end
 
 
