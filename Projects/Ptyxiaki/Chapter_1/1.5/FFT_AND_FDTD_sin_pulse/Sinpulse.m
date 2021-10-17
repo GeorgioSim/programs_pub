@@ -99,9 +99,9 @@ ex(ke)=lex_high_m2;
 lex_high_m2=lex_high_m1;
 lex_high_m1=ex(ke-1);
 
-hy(ke-1)=lhy_high_m2;
+hy(ke)=lhy_high_m2;
 lhy_high_m2=lhy_high_m1;
-lhy_high_m1=hy(ke-2);
+lhy_high_m1=hy(ke-1);
 
 plot(ex);
 annotation('textbox',...
