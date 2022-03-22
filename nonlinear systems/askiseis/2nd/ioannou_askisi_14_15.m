@@ -47,11 +47,14 @@ clear all
 
 
 
+
+
+
 % ASKISI 15
 
-
 x0=0.5;
-dt=2.5;
+dt=0.5;
+dt
 x(1)=x0;
 Tf=100;
 Nt=ceil(Tf/dt)+1;
@@ -64,23 +67,49 @@ for it=2:Nt
     v=-x(it-1).^3;
     x(it)=x(it-1)+v*dt;
     xan(it)=xan(1)./sqrt(1+2.*tt(it).*xan(1).^2);
-%     figure(10)
-%     plot(tt(1:it),xan(1:it),'or',tt(1:it),x(1:it),'b','Linewidth',2)
-%     xlabel('$t$','Interpreter','latex')
-%      ylabel('$x(t)$','Interpreter','latex')
-%      set(gca,'Fontsize',18)
-%     drawnow
     
-end;
+end
 
 figure(11);
 plot(tt,xan,'r',tt,x,'b','Linewidth',2)
 xlabel('$t$','Interpreter','latex')
 ylabel('$x(t)$','Interpreter','latex')
-
+title(['x_{0}=',num2str(x0)]);
 legend('analytical', 'Euler');     % label them -- colors show automagically
 
 set(gca,'Fontsize',18)
 
-
-
+% %elkistis
+% 
+% x0=linspace(-1e-2,1e-2,101)';
+% 
+% 
+% for id=1:length(D);
+%     
+%     delta=D(id);
+%     
+%     Nt=10000;
+%     xt=x0;
+%     ft=[];
+%     for it=1:Nt;
+%         
+%         xt=xt-delta*xt.*log(xt);
+%         
+%         if it>Nt-400;
+%             ft=[ft;xt];
+%         end;
+%     end;
+%     
+%        F(:,id)=ft;
+%        
+% end;
+% 
+% 
+% figure(520)
+% plot(D,F,'.k')
+% xlabel('$\delta$','Interpreter','latex')
+%  ylabel('$x_\infty$','Interpreter','latex')
+% set(gca,'Fontsize',24)
+% 
+% 
+% 
