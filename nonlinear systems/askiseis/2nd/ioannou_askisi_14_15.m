@@ -50,66 +50,124 @@ clear all
 
 
 
-% ASKISI 15
+ % ASKISI 15
+ 
+% %a
+% x0=0.25;
+% Dt=linspace(0.2,3,1);   %works for 1 only
+% % Dt=1;
+% x(1)=x0;
+% Tf=100;
+% tt(1)=0;
+% xan(1)=x0;
+% 
+% for idt=1:length(Dt)
+%     ft=[];
+%     ft_an=[];
+%     ft_tt=[];
+%     dt=Dt(idt);
+%     Nt=ceil(Tf/dt)+1;
+%     for it=2:Nt
+%         tt(it)=(it-1)*dt;
+%         v=-x(it-1).^3;
+%         x(it)=x(it-1)+v*dt;
+%         xan(it)=xan(1)./sqrt(1+2.*tt(it).*xan(1).^2); 
+%         ft=[ft;x(it)];
+%         ft_an=[ft_an;xan(it)];
+%         ft_tt=[ft_tt;tt(it)];
+%     end
+%     F_x(:,idt)=ft;
+%     F_an(:,idt)=ft_an;
+%     F_tt(:,idt)=ft_tt;
+% end
+% 
+% figure(11);
+% plot(F_tt,F_x,'r',F_tt,F_an,'b','Linewidth',2)
+% xlabel('$t$','Interpreter','latex')
+% ylabel('$x(t)$','Interpreter','latex')
+% title(['x_{0}=',num2str(x0),'       dt=',num2str(dt)]);
+% 
+% %label, works for multiple lines 
+% %https://www.mathworks.com/matlabcentral/answers/285396-make-legend-for-lines
+% % linehandles = [p1, p2, p3, ...];
+% % cols = cell2mat(get(linehandles, 'color'));
+% % [~, uidx] = unique(cols, 'rows', 'stable');
+% % legend(linehandles(uidx), {'first class', 'second class'})
+% 
+% %label, works for 2 lines (length(Dt)=1)
+% % legend('analytical', 'Euler');     % label them -- colors show automagically
+% 
+% set(gca,'Fontsize',18)
 
-x0=0.5;
-dt=0.5;
-dt
-x(1)=x0;
-Tf=100;
-Nt=ceil(Tf/dt)+1;
-tt(1)=0;
-xan(1)=x0;
 
-for it=2:Nt
+
+%b
+%elkistis
+dt=0.2;
+% dt=0.4;
+% dt=0.6;
+X0=linspace(-sqrt(2./dt),sqrt(2./dt),301)';
+Tf=1000;
+
+for ix0=1:length(X0)
     
-    tt(it)=(it-1)*dt;
-    v=-x(it-1).^3;
-    x(it)=x(it-1)+v*dt;
-    xan(it)=xan(1)./sqrt(1+2.*tt(it).*xan(1).^2);
+    x0=X0(ix0);    
+    Nt=ceil(Tf/dt)+1;
+    xt=x0;
+    ft=[];
+    for it=1:Nt
+        v=-xt.^3;
+        xt=xt+v.*dt;
+        
+        if it>Nt-400
+            ft=[ft;xt];
+        end
+    end
     
+    F(:,ix0)=ft;
+       
 end
+% t=linspace(0,Tf,length(F));
 
-figure(11);
-plot(tt,xan,'r',tt,x,'b','Linewidth',2)
-xlabel('$t$','Interpreter','latex')
-ylabel('$x(t)$','Interpreter','latex')
-title(['x_{0}=',num2str(x0)]);
-legend('analytical', 'Euler');     % label them -- colors show automagically
+figure(420)
+plot(X0,F,'.k')
+xlabel('$x_{0}$','Interpreter','latex')
+ ylabel('$x_\infty$','Interpreter','latex')
+set(gca,'Fontsize',24)
 
-set(gca,'Fontsize',18)
+
+
 
 % %elkistis
+% x0=0.3;
+% Dt=linspace(1e-4,3,151);
+% Tf=2000;
 % 
-% x0=linspace(-1e-2,1e-2,101)';
-% 
-% 
-% for id=1:length(D);
-%     
-%     delta=D(id);
-%     
-%     Nt=10000;
+% for idt=1:length(Dt)
+%      
+%     dt=Dt(idt);
+%     Nt=ceil(Tf/dt)+1
 %     xt=x0;
 %     ft=[];
-%     for it=1:Nt;
+%     for it=1:Nt
+%         v=-xt.^3;
+%         xt=xt+v.*dt;
 %         
-%         xt=xt-delta*xt.*log(xt);
-%         
-%         if it>Nt-400;
+%         if it>Nt-400
 %             ft=[ft;xt];
-%         end;
-%     end;
+%         end
+%     end
 %     
-%        F(:,id)=ft;
+%     F(:,idt)=ft;
 %        
-% end;
-% 
+% end
+% % t=linspace(0,Tf,length(F));
 % 
 % figure(520)
-% plot(D,F,'.k')
-% xlabel('$\delta$','Interpreter','latex')
+% plot(Dt,F,'.k')
+% xlabel('$dt$','Interpreter','latex')
 %  ylabel('$x_\infty$','Interpreter','latex')
 % set(gca,'Fontsize',24)
-% 
-% 
-% 
+
+
+
