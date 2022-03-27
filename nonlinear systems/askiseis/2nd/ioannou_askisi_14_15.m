@@ -1,57 +1,56 @@
 clear all
 
 
-%ASKISI 14
+% %ASKISI 14
+% 
+% N=300;
+% x=linspace(-pi,pi,N)';
+% R=linspace(0.5,1.5,N);
+% % R=linspace(0.5,2,501);
+% f= R.*cos(x);
+% 
+% x0=linspace(-pi,pi,5)';
+% % x0=1;
+% 
+% for ir=1:length(R)
+% Nt=10000;   %kapou mesa sto loop twn Nt bimatwn oi diaforoi attractors
+% % emfanizontai apo monoi tous ane3artita apo to x0
+%     xt=x0;
+%     r=R(ir);
+%     ft=[];
+%     for it=1:Nt
+%         
+%         xt=r*cos(xt);
+%         
+%         if it>Nt-400
+%             ft=[ft;xt];
+%         end
+%     end
+%     F(:,ir)=ft;
+% end
+% 
+% figure(1)
+% plot(R,F,'.k')
+% xlabel('$r$','Interpreter','latex')
+%  ylabel('$x_\infty$','Interpreter','latex')
+% set(gca,'Fontsize',24)
+% 
+% figure(2)
+% hold on
+% plot(x,f,'r',x,x,'--k','linewidth',2)
+% plot(x,-x,'--k','linewidth',2)
+% yline(0)
+% xlabel('$x_n$','Interpreter','latex')
+% ylabel('$x_{n+1}$','Interpreter','latex')
+% set(gca,'Fontsize',24)
+% hold off
+% 
+% 
+% 
+% 
 
-N=300;
-x=linspace(-pi,pi,N)';
-R=linspace(0.5,1.5,N);
-% R=linspace(0.5,2,501);
-f= R.*cos(x);
 
-x0=linspace(-pi,pi,5)';
-% x0=1;
-
-for ir=1:length(R)
-Nt=10000;   %kapou mesa sto loop twn Nt bimatwn oi diaforoi attractors
-% emfanizontai apo monoi tous ane3artita apo to x0
-    xt=x0;
-    r=R(ir);
-    ft=[];
-    for it=1:Nt
-        
-        xt=r*cos(xt);
-        
-        if it>Nt-400
-            ft=[ft;xt];
-        end
-    end
-    F(:,ir)=ft;
-end
-
-figure(1)
-plot(R,F,'.k')
-xlabel('$r$','Interpreter','latex')
- ylabel('$x_\infty$','Interpreter','latex')
-set(gca,'Fontsize',24)
-
-figure(2)
-hold on
-plot(x,f,'r',x,x,'--k','linewidth',2)
-plot(x,-x,'--k','linewidth',2)
-yline(0)
-xlabel('$x_n$','Interpreter','latex')
-ylabel('$x_{n+1}$','Interpreter','latex')
-set(gca,'Fontsize',24)
-hold off
-
-
-
-
-
-
- % ASKISI 15
- 
+% %  ASKISI 15
 % %a
 % x0=0.25;
 % Dt=linspace(0.2,3,1);   %works for 1 only
@@ -100,47 +99,63 @@ hold off
 % set(gca,'Fontsize',18)
 
 
-% 
-% %b
-% %elkistis
-% dt=0.2;
-% % dt=0.4;
-% % dt=0.6;
-% % dt=0.69;
-% X0=linspace(-sqrt(2./dt),sqrt(2./dt),301)';
-% Tf=1000;
-% 
-% for ix0=1:length(X0)
-%     
-%     x0=X0(ix0);    
-%     Nt=ceil(Tf/dt)+1;
-%     xt=x0;
-%     ft=[];
-%     for it=1:Nt
-%         v=-xt.^3;
-%         xt=xt+v.*dt;
-%         
-%         if it>Nt-400
-%             ft=[ft;xt];
-%         end
-%     end
-%     
-%     F(:,ix0)=ft;
-%        
-% end
-% % t=linspace(0,Tf,length(F));
-% 
+
+%b
+%elkistis
+dt=0.1;
+% dt=0.4;
+% dt=0.6;
+% dt=0.69;
+X0=linspace(-sqrt(2./dt),sqrt(2./dt),701)';
+% X0=2.2361;
+Tf=1000;
+
+for ix0=1:length(X0)
+    
+    x0=X0(ix0);    
+    Nt=ceil(Tf/dt)+1;
+    xt=x0;
+    ft=[];
+    ft_2=[];
+    for it=1:Nt
+        v=-xt.^3;
+        f=xt+v.*dt;
+        vf=-xt.^3;
+        ff=f+vf.*dt;
+        xt=f;
+        xt_2=ff;
+        
+        if it>Nt-400
+            ft=[ft;xt];
+%             if mod(Nt,2)==0
+            ft_2=[ft_2;xt_2];
+%             end
+        end
+    end
+    
+    F(:,ix0)=ft;
+    F_2(:,ix0)=ft_2;
+       
+end
+% t=linspace(0,Tf,length(F));
+
 % figure(420)
 % plot(X0,F,'.k')
 % xlabel('$x_{0}$','Interpreter','latex')
 %  ylabel('$x_\infty$','Interpreter','latex')
 % set(gca,'Fontsize',24)
 
+figure(420)
+plot(X0,F_2,'.k')
+xlabel('$x_{0}$','Interpreter','latex')
+ ylabel('$x_\infty$','Interpreter','latex')
+set(gca,'Fontsize',24)
+
 
 
 % 
 % %elkistis
-% x0=0.3;
+% x0=2.5;
 % % x0=-0.3;
 % % x0=1.2;
 % Dt=linspace(1e-4,3,351);
@@ -172,6 +187,6 @@ hold off
 % ylabel('$x_\infty$','Interpreter','latex')
 % title(['x_{0}=',num2str(x0)]);
 % set(gca,'Fontsize',24)
-% 
+% % 
 % 
 % 
