@@ -10,7 +10,7 @@ for i=1:length(omega)
     legd(i) = plot(kx, real(ky));
     ax = gca;
     ax.ColorOrderIndex=i;
-    plot (-kx, -imag(ky));   %lathos logiki, swsto apotelesma
+    plot (kx, -real(ky));   %lathos logiki, swsto apotelesma
     
     xlabel('k_{x}');
     ylabel('k_{y}');
