@@ -1,0 +1,156 @@
+%
+% This template has been created by Theo J. Mertzimekis, PhD
+% It can be modified freely to meet your needs.
+% Help in using this thesis can be found here:
+% http://users.uoa.gr/~tmertzi/LaTeX
+%
+% As a minimal credit to the creator, please do not remove the lines above
+%
+\documentclass[12pt]{report}
+
+% package to activate greek language - the sequence languages appear below is IMPORTANT!!!
+\usepackage[greek,english]{babel}
+\usepackage{varioref}
+%\usepackage{hyperref}
+\usepackage{multicol}
+% package to handle graphics
+\usepackage{graphicx}
+% package to handle multiple figures in a minipage
+\usepackage{subfigure}
+% package to extend math capabilities
+\usepackage{amsmath,amssymb,isotope}
+\newcommand{\Lagr}{\mathcal{L}}
+\usepackage[version=4]{mhchem}
+
+%package to activate XeTeX font manager
+\usepackage{fontspec}
+\usepackage{physics}
+
+% DOCUMENT LAYOUT
+\usepackage{geometry} 
+\geometry{a4paper, textwidth=5.5in, textheight=8.5in, marginparsep=7pt, marginparwidth=.6in}
+%\geometry{a4paper}
+\setlength\parindent{8mm}
+\setlength\parskip{5mm}
+
+% FONTS
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage{xcolor}
+\defaultfontfeatures{Mapping=tex-text} % converts LaTeX specials (``quotes'' --- dashes etc.) to unicode
+%\setromanfont [Ligatures={Common}, BoldFont={GFS Artemisia Bold}, ItalicFont={Gentium Italic}]{Gentium}
+%\setmonofont[Scale=0.8]{Monaco} 
+\setmainfont{Times New Roman} % You can set your main font here.
+
+% ---- CUSTOM AMPERSAND
+\newcommand{\amper}{{\fontspec[Scale=.95]{Gentium Italic}\selectfont\itshape\&}}
+
+% package to handle line spacing
+\usepackage{setspace}
+
+% HEADINGS
+\usepackage{sectsty} 
+\usepackage[normalem]{ulem} 
+\sectionfont{\rmfamily\mdseries\upshape\Large}
+\subsectionfont{\rmfamily\bfseries\upshape\normalsize} 
+\subsubsectionfont{\rmfamily\mdseries\upshape\normalsize} 
+
+% PDF SETUP
+% ---- FILL IN HERE THE DOC TITLE AND AUTHOR
+
+%add dots to content
+\usepackage{subfigure}
+\usepackage[subfigure]{tocloft}
+\renewcommand{\cftchapleader}{\cftdotfill{\cftdotsep}}
+
+%setup colors in cite, links, etc..
+\usepackage[driverfallback=dvipdfmx, bookmarks, colorlinks, breaklinks, pdftitle={Georgios K. Simopoulos},pdfauthor={gsimop}]{hyperref}  
+\hypersetup{linkcolor=black,citecolor=blue,filecolor=black,urlcolor=blue} 
+
+% package for fancy style headers and footers
+\usepackage{fancybox}
+
+
+% redefine bullet symbols and section style
+\renewcommand\thesection{\arabic{section}.}
+\renewcommand{\labelitemi}{$\blacktriangleright$}
+\renewcommand{\labelitemii}{$\bullet$}
+
+% change captions especially for greek language - if the document is in ENGLISH, they should vanish
+\addto\captionsenglish{%
+  \renewcommand\prefacename{Πρόλογος}%
+  \renewcommand\refname{Αναφορές}%
+  \renewcommand\abstractname{Περίληψη}%
+  \renewcommand\bibname{Βιβλιογραφία}%
+  \renewcommand\chaptername{Chapter}%
+  \renewcommand\appendixname{Παράρτημα}%
+  \renewcommand\contentsname{Contents}%
+  \renewcommand\listfigurename{Κατάλογος Σχημάτων}%
+  \renewcommand\listtablename{Κατάλογος Πινάκων}%
+  \renewcommand\indexname{Ευρετήριο}%
+  \renewcommand\figurename{Σχήμα}%
+  \renewcommand\tablename{Πίνακας}%
+  \renewcommand\partname{Μέρος}%
+  \renewcommand\enclname{Συνημμένα}%
+  \renewcommand\ccname{Κοινοποίηση}%
+  \renewcommand\headtoname{Προς}%
+  \renewcommand\pagename{Σελίδα}%
+  \renewcommand\seename{βλέπε}%
+  \renewcommand\alsoname{βλέπε επίσης}%
+  \renewcommand\proofname{Απόδειξη}%
+  \renewcommand\glossaryname{Γλωσσάρι}%
+  }
+
+\usepackage{xgreek}
+
+%myedit
+\newcommand{\Fourier}{\mathcal{F}}
+\usepackage[labelfont=bf,font={footnotesize,it}]{caption}
+\usepackage{scalerel}
+%Includes "References" in the table of contents
+\usepackage[nottoc]{tocbibind}
+
+\renewcommand\thesection{\arabic{section}}
+%    \renewcommand\theequation{\thesection.\arabic{equation}}
+%     \renewcommand\thesubsubsection{\thesubsection.\arabic{subsubsection}}
+\usepackage{mathtools}
+
+\usepackage{tensor}
+
+\DeclareMathOperator{\sinc}{sinc}
+
+%%%%%%%%% END OF PREAMBLE %%%%%%%%%%%%
+
+\begin{document}
+
+\setlanguage{greek} %% this is to activate greek hyphenation
+
+% make title out of \author, \title, \date  specified in the preamble
+
+% create a blank page immediately after the cover page
+
+\input{titlepage}
+\pagebreak
+% Create table of contents - not mandatory
+\tableofcontents
+\include{blank_page}
+
+% Create a list of figures - not mandatory
+%\listoffigures
+
+% include files with content. Changes the names according to your taste.
+
+
+\setlength{\fboxsep}{0pt}
+\setlength{\fboxrule}{.1pt}
+%%\[ \fbox{$\Box$} \fbox{$\hat\Box$} \fbox{$\tilde\Box$} \]
+
+
+
+\chapter{FFT}
+\input{chap_1}
+
+
+
+
+\end{document}
