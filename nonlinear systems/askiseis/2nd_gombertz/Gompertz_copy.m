@@ -16,7 +16,7 @@ x0=input('X0 = ? ')
 % set(gca,'Fontsize',18)
 % hold on
 
-x0=1;
+% x0=1;
 dt=2.5;
 x(1)=x0;
 Tf=10000;

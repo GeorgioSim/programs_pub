@@ -13,12 +13,11 @@ w=40;  u00=exp(-(X/w).^8-(Y/w).^8); % Beam at z=0
 kz = 5.5;
 kr = sqrt(k.^2-kz.^2);
 r = sqrt(x.^2 + y.^2);
-% Magic speckle random number gen
 
-phi = exp(1i*(kx.*x+ky.*y));
-rand = randn(size(phi));
-Rand0 = sum(rand.*phi);
-u0 = u00 .* Rand0;
+% Magic speckle random number gen
+phi = exp(1i*pi./4.*X)+exp(1i*pi./8.*X)+exp(1i*pi./12.*X)+exp(1i*pi./0.2.*X);
+% phi = exp(1i*(kx.*X+(kr.^2-kx.^2).*Y));
+u0 = phi;
 
 figure(1); surf(X,Y,abs(u0).^2); shading interp; view([0 90]);
 axis square; axis tight;  % initial intensity at z=0

@@ -102,10 +102,10 @@ clear all
 
 %b
 %elkistis
-dt=0.1;
+% dt=0.1;
 % dt=0.4;
 % dt=0.6;
-% dt=0.69;
+dt=0.69;
 X0=linspace(-sqrt(2./dt),sqrt(2./dt),701)';
 % X0=2.2361;
 Tf=1000;

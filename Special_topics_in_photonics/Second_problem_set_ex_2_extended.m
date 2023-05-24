@@ -141,7 +141,8 @@ zmax=ceil(max(z)); z=linspace(0,zmax,Nz); u0=u; %This is for the simulation
 zstop = zR;
 
 % [minValue, closestIndex_2] = findClosestValue(zR, z_);
-[minValue, closestIndex_2] = findClosestValue(zstop, z_);
+% [minValue, closestIndex_2] = findClosestValue(zstop, z_);
+[minValue, closestIndex_2] = findClosestValue(z_, zstop);
 stop_loops = false;
 
 for m=1:Nz

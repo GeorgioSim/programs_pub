@@ -9,11 +9,10 @@ kx=(2*pi/Lx)*[0:Nx/2-1 -Nx/2:-1]'; % kx-grid
 ky=(2*pi/Ly)*[0:Ny/2-1 -Ny/2:-1]'; % ky-grid
 [X,Y]=meshgrid(x,y); [KX,KY]=meshgrid(kx,ky);
 
-w=40;  gaussian=exp(-(X/w).^2-(Y/w).^2); % G.Beam at z=0
 w=40;  u00=exp(-(X/w).^8-(Y/w).^8); % Beam at z=0
 kz = 6.2;
 kr = sqrt(k.^2-kz.^2);
-r = sqrt(x.^2 + y.^2);
+r = sqrt(X.^2 + Y.^2);
 zz = kr.*r;
 Bes = besselj(0,zz);
 u0 = u00 .* Bes;
@@ -26,19 +25,33 @@ axis square; axis tight;  % Initial spectrum at z=0
 S=100; zmax=lambda*50 ; z=linspace(0,zmax,S);
 % S=100; zmax=10; z=linspace(0,zmax,S);
 
-% Compare widths
-[fwhm_gaussian, fwhmy_gaussian, w_numerical_gaussian] = calculate_beam_fwhm(gaussian,y);
+% Widths
 [fwhm_u0, fwhmy_u0, w_numerical_u0] = calculate_beam_fwhm(u0,y);
+
+w=fwhmy_u0;  gaussian=exp(-(X/w).^2-(Y/w).^2); % G.Beam at z=0
 
 for m=1:S   % Solution of Helmholtz equation
     m
     u1=ifft2(fft2(u0).*exp(1i*z(m)*sqrt(k^2-KX.^2-KY.^2)));
     field(m,:,:)=u1;
-end; 
-figure(3); surf(X,Y,abs(u1).^2); shading interp; view([0 90]);
+    gaussian_1=ifft2(fft2(gaussian).*exp(1i*z(m)*sqrt(k^2-KX.^2-KY.^2)));
+    field(m,:,:)=gaussian_1;
+end
+figure(3); surf(X,Y,abs(u1).^2); shading interp;  view([0 90]);
 axis square; axis tight; % Final intensity at z=zmax
-figure(4); surf(KX,KY,abs(fft2(u1))); shading interp; view([0 90]);
-axis square; axis tight;  % Final spectrum at z=zmax
+% figure(4); surf(KX,KY,abs(fft2(u1))); shading interp; view([0 90]);
+% axis square; axis tight;  % Final spectrum at z=zmax
+
+figure(7); surf(X,Y,abs(gaussian_1).^2); shading interp; view([0 90]);
+axis square; axis tight; % Final intensity at z=zmax
+% figure(8); surf(KX,KY,abs(fft2(gaussian_1))); shading interp; view([0 90]);
+% axis square; axis tight;  % Final spectrum at z=zmax
+
+
+figure(10); surf(X,Y,abs(gaussian).^2); shading interp; view([0 90]);
+axis square; axis tight; % intensity at z=0
+figure(11); surf(X,Y,abs(u0).^2); shading interp; view([0 90]);
+axis square; axis tight; % intensity at z=0
 
 % Note: Outside the +/- (2*pi) in the fourier spectrum, we have 
 % evansecent waves. If the beam's width becomes compare to thewavelength
@@ -49,8 +62,10 @@ function [fwhm, fwhmy, w_numerical] = calculate_beam_fwhm(u1,y)
             [max_u1, max_u1_index] = max(abs(u1(:)));
             % Convert the index to row and column subscripts
             [max_u1_row, max_u1_col] = ind2sub(size(u1), max_u1_index);
-            % Find the x-value corresponding to the maximum absolute value in u1
-            u1_zR = u1(:,max_u1_col);  
+            % Find the y-value corresponding to the maximum absolute value in u1
+            u1_zR = u1(max_u1_col,:);  
+%             % Find the x-value corresponding to the maximum absolute value in u1
+%             u1_zR = u1(:,max_u1_col);  
             data = abs(u1_zR).^2;
              % Find the half max value.
             halfMax = (min(data) + max(data)) / 2;

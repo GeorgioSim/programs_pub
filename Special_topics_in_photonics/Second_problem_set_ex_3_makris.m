@@ -15,11 +15,13 @@ w=3;
 gaussian=exp(-(X/w).^2-(Y/w).^2);
 
 newton = F4;
-% u = F4;
+u = F4;
 %  u = gaussian;
-u = gaussian*exp(1i*newton);
+% u = gaussian*exp(1i*newton);
+u = gaussian.*exp(1i*newton);
 
-figure(1); surf(X,Y,abs(u)); shading interp; colormap(jet); view([180 90]); 
+figure(1); surf(X,Y,abs(u)); shading interp; colormap(jet); view([180 90]);
+figure(2); surf(X,Y,angle(u)); shading interp; colormap(jet); view([180 90]);
 axis tight; axis square;
 
 S=100; zmax=10; z=linspace(0,zmax,S); u0=u;
@@ -27,7 +29,8 @@ for m=1:S
  m
  u1=ifft2(fft2(u0).*exp(-1i*z(m)*(KX.^2+KY.^2)));
  field(m,:,:)=u1; 
- figure(3); surf(X,Y,abs(u1).^2); axis([-70 70 -70 70]);
+%  figure(3); surf(X,Y,abs(u1)); axis([-70 70 -70 70]);
+ figure(4); surf(X,Y,angle(u1)); axis([-70 70 -70 70]);
  shading interp;  colormap(jet); axis square;  
   view([180 90]); 
 drawnow;

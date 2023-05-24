@@ -123,11 +123,12 @@ F4=abs(F4)/max(max(abs(F4)));  % normalization
 
 gaussian = gaussian_beam;
 newton = F4;
-% u = F4;
+u = F4;
 %  u = gaussian;
-u = gaussian*exp(1i*newton);
+% u = gaussian.*exp(1i*newton);
 
 figure(1); surf(X,Y,abs(u)); shading interp; colormap(jet); view([180 90]); 
+figure(2); surf(X,Y,angle(u)); shading interp; colormap(jet); view([180 90]); 
 axis tight; axis square;
 
 zmax=ceil(max(z)); z=linspace(0,zmax,Nz); u0=u; %This is for the simulation
@@ -140,7 +141,8 @@ for m=1:Nz
  u1=ifft2(fft2(u0).*exp(-1i*z(m)*(KX.^2+KY.^2)));
  field(m,:,:)=u1; 
 
-figure(3); surf(X,Y,abs(u1).^2); axis([-Lx./2 Lx./2 -Ly./2 Ly./2]); 
+% figure(3); surf(X,Y,abs(u1).^2); axis([-Lx./2 Lx./2 -Ly./2 Ly./2]);
+figure(3); surf(X,Y,angle(u1).^2); axis([-Lx./2 Lx./2 -Ly./2 Ly./2]);
 
 % set(gca,'XTickLabel',{num2str(-window_size),num2str(-window_size./2),0,num2str(window_size./2),num2str(window_size)})
 % set(gca,'YTickLabel',{num2str(-window_size),0,num2str(window_size)})

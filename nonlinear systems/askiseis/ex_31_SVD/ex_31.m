@@ -6,7 +6,7 @@ y =[0:1:100];
 epsilon =0;
 epsilon=0.5;
 epsilon =1;
-epsilon =10;
+% epsilon =10;
 A=sin(2* pi*xx /100) .* cos(2* pi*yy /100)+epsilon *randn( size (xx ) ) ;
 figure (450)
 contourf(xx , yy ,A) ; colorbar ; colormap jet
